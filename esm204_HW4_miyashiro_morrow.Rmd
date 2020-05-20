@@ -1,0 +1,58 @@
+---
+title: "A Climate Change Model"
+subtitle: "ESM 204: Homework #4"
+author: "Bobby Miyashiro & Keene Morrow"
+date: "5/27/2020"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+ESM 204: Homework #4 (A Climate Change Model)
+Professor Christopher Costello
+Due May 27, 8:00 am
+
+This problem set asks you to build a climate-economy model with risk and discounting and to conduct sensitivity analysis on it. Hint: I strongly recommend using R and building “functions” for each of the equations you see below. Under BAU, let tau (t) be the temperature in year t (t = 0, 1, ..., 200) relative to the temperature at time 0. Suppose
+
+tau (t) = min(Tt/100, T)                   (1)
+
+Where T is the BAU temperature increase at year 100. For example, if T = 5 then the temperature increases over time (linearly) until year 100, when it flattens out at 5. The hotter it is, the more it affects daily life and it starts to eat away at economic activity. Let K(t) be the fraction of economic activity that is retained in a year if the temperature is tau (t), given by
+
+K(t) = exp(−beta * tau (t)2)                   (2)
+
+Economic activity (“consumption”) grows over time at rate g, but is reduced by K (see above), so total consumption at time t is:
+
+C(t) = K(t)exp(gt)                   (3)
+
+Society’s utility from consumption is given by the function
+
+U(C) = ( C^1 − eta ) / (1 - eta)                  (4)
+
+For some analyses below, you may wish to discount utility to present value. The discount rate is given by the Ramsey Rule:
+
+r = delta + eta * g                   (5)
+
+You will build a climate-economy model using the equations above. Use the following base case parameters for this model:
+delta = .005, eta = .5, g = .01, beta = .05.
+
+***
+
+1. Plots
+
+(a) Plot temperature over time for no climate change (T = 0), with modest climate change (T = 2), and with extreme climate change (T = 8).
+
+(b) Plot consumption over time for no climate change, modest climate change, and extreme climate change.
+
+(c) Plot undiscounted utility over time for no climate change, modest climate change, and extreme climate change.
+
+2. Analysis
+
+(a) Suppose T = 4.4. In other words, suppose we know for sure that under BAU, climate change will eventually lead to a 4.4 degree increase in temperature. What is the present value (i.e. discounted) utility over the next 200 years with climate change? What is the present value utility without climate change? What is the percentage loss in present value utility from climate change (call this L)?
+
+(b) Now show how sensitive your calculation of L is to the following parameters: T, g, eta, and beta. To do so, calculate the % change in L that arises from a 10% increase in each of these parameters.
+
+(c) Back to the original parameters, suppose we could completely prevent climate change from occurring (so T = 0 instead of T = 4.4) but doing so would require giving up a fraction theta of consumption every year for the next 200 years. What is the maximum value of theta society would be willing to endure every year to completely prevent climate change? Call this theta*.
+
+(d) Suppose we are uncertain about T, but it has the following probability distribution: T = 2 (with probability .2), T = 4 (with probability .5), and T = 6 (with probability .3). Calculate theta* under uncertainty over T.
