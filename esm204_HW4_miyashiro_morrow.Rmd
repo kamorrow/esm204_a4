@@ -130,7 +130,7 @@ ggplot(data = df_plots) +
        # subtitle = "",
        x = "Year",
        y = "Relative Temperature",
-       caption = "Figure 1. Relative temperature change over time for various cliamte change scenarios.\nESM 204 Spring 2020\nBobby Miyashiro & Keene Morrow") +
+       caption = "Figure 1. Relative temperature change over time for various climate change scenarios.\nESM 204 Spring 2020\nBobby Miyashiro & Keene Morrow") +
   # scale_x_continuous(expand = c(0, 0)) +
   theme_minimal() +
   theme(plot.caption = element_text(hjust = 0, face = "italic"))
@@ -209,21 +209,45 @@ What is the present value utility without climate change?
 What is the percentage loss in present value utility from climate change (call this L)?
 
 ```{r}
-PV <- function(x, r){
-  PV = x/r
+PV <- function(x, r, t){
+  PV = x/(1+r)^t
   return(PV)
 }
 
-NPV <- function(B, C, r){
-  NPV = PV(B,r) - PV(C, r)
-  return(NPV)
-}
+#NPV <- function(B, C, r){
+#  NPV = PV(B,r) - PV(C, r)
+#  return(NPV)
+#}
 
 # df_a <- df %>%
 #   mutate(tau_t_0 = rel_temp_t(4.4, t),
 #          NPV_cc = ,
 #          NPV_no_cc = ,
 #          L = ) # percent loss in present value utility
+```
+
+```{r}
+#Present value utility with 4.4 degree increase in temp from climate change
+BAU_4.4 <- df %>% 
+  mutate(tau_t_4.4 = rel_temp_t(4.4, t),
+         K_4.4 = K_t(beta, tau_t_4.4),
+         C_4.4 = C_t(K_4.4, g, t),
+         U_4.4 = U_C(C_4.4, eta),
+         PV_4.4 = PV(U_4.4, ramsey(delta, eta, g), t))
+
+sum(BAU_4.4$PV_4.4)
+
+#Present value without utility without climate, hence 0 degree increase
+BAU_no_cc <- df %>% 
+  mutate(tau_t_no_cc = rel_temp_t(0, t),
+         K_no_cc = K_t(beta, tau_t_no_cc),
+         C_no_cc = C_t(K_no_cc, g, t),
+         U_no_cc = U_C(C_no_cc, eta),
+         PV_no_cc = PV(U_no_cc, ramsey(delta, eta, g), t))
+
+sum(BAU_no_cc$PV_no_cc)
+
+#Percent loss 
 ```
 
 
