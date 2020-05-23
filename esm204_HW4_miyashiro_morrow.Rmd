@@ -97,8 +97,11 @@ delta = 0.005, eta = 0.5, g = 0.01, beta = 0.05.
 ```{r}
 delta <- 0.005
 eta <- 0.5
+# original eta was 0.5
 g <- 0.01
+# original g was 0.01
 beta <- 0.05
+# original beta was 0.05
 ```
 
 
@@ -236,6 +239,7 @@ BAU_4.4 <- df %>%
          PV_4.4 = PV(U_4.4, ramsey(delta, eta, g), t))
 
 PV_BAU_4.4 <- sum(BAU_4.4$PV_4.4)
+#PV_BAU_4.4 is 198.661
 
 #Present value without utility without climate, hence 0 degree increase
 BAU_no_cc <- df %>% 
@@ -246,13 +250,39 @@ BAU_no_cc <- df %>%
          PV_no_cc = PV(U_no_cc, ramsey(delta, eta, g), t))
 
 PV_no_cc <- sum(BAU_no_cc$PV_no_cc)
+# PV_no_cc is 255.273
 
-#Percent loss 
+# Percent loss 
 L <- ((PV_no_cc - PV_BAU_4.4)/PV_no_cc)*100
+
+# L is 22.177
 ```
 
-
 (b) Now show how sensitive your calculation of L is to the following parameters: T, g, eta, and beta. To do so, calculate the % change in L that arises from a 10% increase in each of these parameters.
+
+```{r}
+# Present value utility with 4.84 degree increase in temp from climate change
+BAU_4.84 <- df %>% 
+  mutate(tau_t_4.84 = rel_temp_t(4.84, t),
+         K_4.84 = K_t(beta, tau_t_4.84),
+         C_4.84 = C_t(K_4.84, g, t),
+         U_4.84 = U_C(C_4.84, eta),
+         PV_4.84 = PV(U_4.84, ramsey(delta, eta, g), t))
+
+PV_BAU_4.84 <- sum(BAU_4.84$PV_4.84)
+# PV_BAU_4.84
+
+# Percent loss 
+L <- ((PV_no_cc - PV_BAU_4.84)/PV_no_cc)*100
+
+# L is 25.797 for a 10% increase in T
+```
+
+```{r}
+# L with a 10% increase in g is 22.181
+# L with a 10% increase in eta is 19.596
+# L with a 10% increase in beta is 23.939
+```
 
 (c) Back to the original parameters, suppose we could completely prevent climate change from occurring (so T = 0 instead of T = 4.4) but doing so would require giving up a fraction theta of consumption every year for the next 200 years. What is the maximum value of theta society would be willing to endure every year to completely prevent climate change? Call this theta*.
 
