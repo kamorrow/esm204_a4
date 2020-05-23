@@ -235,7 +235,7 @@ BAU_4.4 <- df %>%
          U_4.4 = U_C(C_4.4, eta),
          PV_4.4 = PV(U_4.4, ramsey(delta, eta, g), t))
 
-sum(BAU_4.4$PV_4.4)
+PV_BAU_4.4 <- sum(BAU_4.4$PV_4.4)
 
 #Present value without utility without climate, hence 0 degree increase
 BAU_no_cc <- df %>% 
@@ -245,9 +245,10 @@ BAU_no_cc <- df %>%
          U_no_cc = U_C(C_no_cc, eta),
          PV_no_cc = PV(U_no_cc, ramsey(delta, eta, g), t))
 
-sum(BAU_no_cc$PV_no_cc)
+PV_no_cc <- sum(BAU_no_cc$PV_no_cc)
 
 #Percent loss 
+L <- ((PV_no_cc - PV_BAU_4.4)/PV_no_cc)*100
 ```
 
 
