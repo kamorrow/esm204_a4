@@ -286,4 +286,17 @@ L <- ((PV_no_cc - PV_BAU_4.84)/PV_no_cc)*100
 
 (c) Back to the original parameters, suppose we could completely prevent climate change from occurring (so T = 0 instead of T = 4.4) but doing so would require giving up a fraction theta of consumption every year for the next 200 years. What is the maximum value of theta society would be willing to endure every year to completely prevent climate change? Call this theta*.
 
+```{r}
+#Find where U becomes negative, holding T at 0 and changing C
+BAU_prevent_cc <- df %>% 
+  mutate(
+    tau_t_prevent_cc = rel_temp_t(0, t),
+         K_prevent_cc = K_t(beta, tau_t_prevent_cc),
+         C_prevent_cc = C_t(K_prevent_cc, g, t),
+         U_prevent_cc = U_C(C_prevent_cc - 0.999*C_prevent_cc, eta),
+         PV_prevent_cc = PV(U_prevent_cc, ramsey(delta, eta, g), t))
+
+PV_prevent_cc <- sum(BAU_prevent_cc$PV_prevent_cc)
+```
+
 (d) Suppose we are uncertain about T, but it has the following probability distribution: T = 2 (with probability .2), T = 4 (with probability .5), and T = 6 (with probability .3). Calculate theta* under uncertainty over T.
