@@ -288,15 +288,18 @@ L <- ((PV_no_cc - PV_BAU_4.84)/PV_no_cc)*100
 
 ```{r}
 #Find where U becomes negative, holding T at 0 and changing C
-BAU_prevent_cc <- df %>% 
-  mutate(
-    tau_t_prevent_cc = rel_temp_t(0, t),
-         K_prevent_cc = K_t(beta, tau_t_prevent_cc),
-         C_prevent_cc = C_t(K_prevent_cc, g, t),
-         U_prevent_cc = U_C(C_prevent_cc - 0.999*C_prevent_cc, eta),
-         PV_prevent_cc = PV(U_prevent_cc, ramsey(delta, eta, g), t))
+#BAU_prevent_cc <- df %>% 
+#  mutate(
+#    tau_t_prevent_cc = rel_temp_t(0, t),
+#         K_prevent_cc = K_t(beta, tau_t_prevent_cc),
+#         C_prevent_cc = C_t(K_prevent_cc, g, t),
+#         U_prevent_cc = U_C(C_prevent_cc - 0.999*C_prevent_cc, eta),
+#         PV_prevent_cc = PV(U_prevent_cc, ramsey(delta, eta, g), t))
 
-PV_prevent_cc <- sum(BAU_prevent_cc$PV_prevent_cc)
+#PV_prevent_cc <- sum(BAU_prevent_cc$PV_prevent_cc)
+
+prevent_cc <- full_join(BAU_4.4, BAU_no_cc) %>% 
+  mutate(C_difference = C_no_cc - C_4.4)
 ```
 
 (d) Suppose we are uncertain about T, but it has the following probability distribution: T = 2 (with probability .2), T = 4 (with probability .5), and T = 6 (with probability .3). Calculate theta* under uncertainty over T.
