@@ -319,11 +319,11 @@ sen <- function(T, g, eta, beta, delta = 0.005){
 }
 
 df_2b <- data.frame(increase = c("none", "T", "g", "eta", "beta")) %>%
-  mutate(T = as.numeric(c(4.4, 4.84, 4.4, 4.4, 4.4)),
-         g = as.numeric(c(g, g, g * 1.1, g, g)),
-         eta = as.numeric(c(eta, eta, eta, eta * 1.1, eta)),
-         beta = as.numeric(c(beta, beta, beta, beta, beta * 1.1))) %>%
-  mutate(sum = sum(T))
+  mutate(T_sen = as.numeric(c(4.4, 4.84, 4.4, 4.4, 4.4)),
+         g_sen = as.numeric(c(g, g, g * 1.1, g, g)),
+         eta_sen = as.numeric(c(eta, eta, eta, eta * 1.1, eta)),
+         beta_sen = as.numeric(c(beta, beta, beta, beta, beta * 1.1))) #%>%
+  # mutate(L = sen(T_sen, g_sen, eta_sen, beta_sen))
     
 L_sen_test_1 <- sen(df_2b$T_sen[1], df_2b$g_sen[1], df_2b$eta_sen[1], df_2b$beta_sen[1], delta)
 L_sen_test_2 <- sen(df_2b$T_sen[2], df_2b$g_sen[2], df_2b$eta_sen[2], df_2b$beta_sen[2], delta)
