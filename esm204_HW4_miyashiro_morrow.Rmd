@@ -250,11 +250,11 @@ $`r round(PV_no_cc ,2)`
 What is the percentage loss in present value utility from climate change (call this L)?
 ```{r}
 # Percent loss 
-L <- ((PV_no_cc - PV_BAU_4.4)/PV_no_cc)*100
+L_4.4 <- ((PV_no_cc - PV_BAU_4.4)/PV_no_cc)*100
 
 # L is 22.177
 ```
-`r round(L ,2)`% loss
+`r round(L_4.4 ,2)`% loss
 
 
 
@@ -273,7 +273,7 @@ PV_BAU_4.84 <- sum(BAU_4.84$PV_4.84)
 # PV_BAU_4.84
 
 # Percent loss 
-L <- ((PV_no_cc - PV_BAU_4.84)/PV_no_cc)*100
+L_4.84 <- ((PV_no_cc - PV_BAU_4.84)/PV_no_cc)*100
 
 # L is 25.797 for a 10% increase in T
 ```
@@ -283,6 +283,56 @@ L <- ((PV_no_cc - PV_BAU_4.84)/PV_no_cc)*100
 # L with a 10% increase in eta is 19.596
 # L with a 10% increase in beta is 23.939
 ```
+
+
+```{r}
+sen <- function(T, g, eta, beta, delta = 0.005){
+  df <- data.frame(t = seq(0, 200, by = 1))
+  
+  T_no_cc <- 0
+  g_no_cc <- 0.01
+  eta_no_cc <- 0.5
+  beta_no_cc <- 0.05
+  delta_no_cc <- 0.005
+  
+  BAU_no_cc <- df %>% 
+    mutate(tau_t_no_cc = rel_temp_t(T_no_cc, t),
+           K_no_cc = K_t(beta_no_cc, tau_t_no_cc),
+           C_no_cc = C_t(K_no_cc, g_no_cc, t),
+           U_no_cc = U_C(C_no_cc, eta_no_cc),
+           PV_no_cc = PV(U_no_cc, ramsey(delta_no_cc, eta_no_cc, g_no_cc), t))
+  
+  PV_no_cc <- sum(BAU_no_cc$PV_no_cc)
+  
+  BAU <- df %>% 
+    mutate(tau_t = rel_temp_t(T, t),
+           K = K_t(beta, tau_t),
+           C = C_t(K, g, t),
+           U = U_C(C, eta),
+           PV = PV(U, ramsey(delta, eta, g), t))
+  
+  PV_BAU <- sum(BAU$PV)
+  
+  L = ((PV_no_cc - PV_BAU)/PV_no_cc)*100
+  
+  return(L)
+}
+
+df_2b <- data.frame(increase = c("none", "T", "g", "eta", "beta")) %>%
+  mutate(T = as.numeric(c(4.4, 4.84, 4.4, 4.4, 4.4)),
+         g = as.numeric(c(g, g, g * 1.1, g, g)),
+         eta = as.numeric(c(eta, eta, eta, eta * 1.1, eta)),
+         beta = as.numeric(c(beta, beta, beta, beta, beta * 1.1))) %>%
+  mutate(sum = sum(T))
+    
+L_sen_test_1 <- sen(df_2b$T_sen[1], df_2b$g_sen[1], df_2b$eta_sen[1], df_2b$beta_sen[1], delta)
+L_sen_test_2 <- sen(df_2b$T_sen[2], df_2b$g_sen[2], df_2b$eta_sen[2], df_2b$beta_sen[2], delta)
+L_sen_test_3 <- sen(df_2b$T_sen[3], df_2b$g_sen[3], df_2b$eta_sen[3], df_2b$beta_sen[3], delta)
+L_sen_test_4 <- sen(df_2b$T_sen[4], df_2b$g_sen[4], df_2b$eta_sen[4], df_2b$beta_sen[4], delta)
+L_sen_test_5 <- sen(df_2b$T_sen[5], df_2b$g_sen[5], df_2b$eta_sen[5], df_2b$beta_sen[5], delta)
+  
+```
+
 
 (c) Back to the original parameters, suppose we could completely prevent climate change from occurring (so T = 0 instead of T = 4.4) but doing so would require giving up a fraction theta of consumption every year for the next 200 years. What is the maximum value of theta society would be willing to endure every year to completely prevent climate change? Call this theta*.
 
