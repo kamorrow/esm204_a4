@@ -207,28 +207,15 @@ ggplot(data = df_plots) +
 2. Analysis
 
 (a) Suppose T = 4.4. In other words, suppose we know for sure that under BAU, climate change will eventually lead to a 4.4 degree increase in temperature.
-What is the present value (i.e. discounted) utility over the next 200 years with climate change?
-What is the present value utility without climate change?
-What is the percentage loss in present value utility from climate change (call this L)?
 
 ```{r}
 PV <- function(x, r, t){
   PV = x/(1+r)^t
   return(PV)
 }
-
-#NPV <- function(B, C, r){
-#  NPV = PV(B,r) - PV(C, r)
-#  return(NPV)
-#}
-
-# df_a <- df %>%
-#   mutate(tau_t_0 = rel_temp_t(4.4, t),
-#          NPV_cc = ,
-#          NPV_no_cc = ,
-#          L = ) # percent loss in present value utility
 ```
 
+What is the present value (i.e. discounted) utility over the next 200 years with climate change?
 ```{r}
 #Present value utility with 4.4 degree increase in temp from climate change
 BAU_4.4 <- df %>% 
@@ -240,7 +227,12 @@ BAU_4.4 <- df %>%
 
 PV_BAU_4.4 <- sum(BAU_4.4$PV_4.4)
 #PV_BAU_4.4 is 198.661
+```
+$`r round(PV_BAU_4.4 ,2)`
 
+
+What is the present value utility without climate change?
+```{r}
 #Present value without utility without climate, hence 0 degree increase
 BAU_no_cc <- df %>% 
   mutate(tau_t_no_cc = rel_temp_t(0, t),
@@ -251,12 +243,20 @@ BAU_no_cc <- df %>%
 
 PV_no_cc <- sum(BAU_no_cc$PV_no_cc)
 # PV_no_cc is 255.273
+```
+$`r round(PV_no_cc ,2)`
 
+
+What is the percentage loss in present value utility from climate change (call this L)?
+```{r}
 # Percent loss 
 L <- ((PV_no_cc - PV_BAU_4.4)/PV_no_cc)*100
 
 # L is 22.177
 ```
+`r round(L ,2)`% loss
+
+
 
 (b) Now show how sensitive your calculation of L is to the following parameters: T, g, eta, and beta. To do so, calculate the % change in L that arises from a 10% increase in each of these parameters.
 
