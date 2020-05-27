@@ -1,0 +1,724 @@
+\PassOptionsToPackage{unicode=true}{hyperref} % options for packages loaded elsewhere
+\PassOptionsToPackage{hyphens}{url}
+%
+\documentclass[]{article}
+\usepackage{lmodern}
+\usepackage{amssymb,amsmath}
+\usepackage{ifxetex,ifluatex}
+\usepackage{fixltx2e} % provides \textsubscript
+\ifnum 0\ifxetex 1\fi\ifluatex 1\fi=0 % if pdftex
+  \usepackage[T1]{fontenc}
+  \usepackage[utf8]{inputenc}
+  \usepackage{textcomp} % provides euro and other symbols
+\else % if luatex or xelatex
+  \usepackage{unicode-math}
+  \defaultfontfeatures{Ligatures=TeX,Scale=MatchLowercase}
+\fi
+% use upquote if available, for straight quotes in verbatim environments
+\IfFileExists{upquote.sty}{\usepackage{upquote}}{}
+% use microtype if available
+\IfFileExists{microtype.sty}{%
+\usepackage[]{microtype}
+\UseMicrotypeSet[protrusion]{basicmath} % disable protrusion for tt fonts
+}{}
+\IfFileExists{parskip.sty}{%
+\usepackage{parskip}
+}{% else
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{6pt plus 2pt minus 1pt}
+}
+\usepackage{hyperref}
+\hypersetup{
+            pdftitle={A Climate Change Model},
+            pdfauthor={Bobby Miyashiro \& Keene Morrow},
+            pdfborder={0 0 0},
+            breaklinks=true}
+\urlstyle{same}  % don't use monospace font for urls
+\usepackage[margin=1in]{geometry}
+\usepackage{color}
+\usepackage{fancyvrb}
+\newcommand{\VerbBar}{|}
+\newcommand{\VERB}{\Verb[commandchars=\\\{\}]}
+\DefineVerbatimEnvironment{Highlighting}{Verbatim}{commandchars=\\\{\}}
+% Add ',fontsize=\small' for more characters per line
+\usepackage{framed}
+\definecolor{shadecolor}{RGB}{248,248,248}
+\newenvironment{Shaded}{\begin{snugshade}}{\end{snugshade}}
+\newcommand{\AlertTok}[1]{\textcolor[rgb]{0.94,0.16,0.16}{#1}}
+\newcommand{\AnnotationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\AttributeTok}[1]{\textcolor[rgb]{0.77,0.63,0.00}{#1}}
+\newcommand{\BaseNTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{#1}}
+\newcommand{\BuiltInTok}[1]{#1}
+\newcommand{\CharTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\CommentTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textit{#1}}}
+\newcommand{\CommentVarTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\ConstantTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
+\newcommand{\ControlFlowTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{\textbf{#1}}}
+\newcommand{\DataTypeTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{#1}}
+\newcommand{\DecValTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{#1}}
+\newcommand{\DocumentationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\ErrorTok}[1]{\textcolor[rgb]{0.64,0.00,0.00}{\textbf{#1}}}
+\newcommand{\ExtensionTok}[1]{#1}
+\newcommand{\FloatTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{#1}}
+\newcommand{\FunctionTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
+\newcommand{\ImportTok}[1]{#1}
+\newcommand{\InformationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\KeywordTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{\textbf{#1}}}
+\newcommand{\NormalTok}[1]{#1}
+\newcommand{\OperatorTok}[1]{\textcolor[rgb]{0.81,0.36,0.00}{\textbf{#1}}}
+\newcommand{\OtherTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{#1}}
+\newcommand{\PreprocessorTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textit{#1}}}
+\newcommand{\RegionMarkerTok}[1]{#1}
+\newcommand{\SpecialCharTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
+\newcommand{\SpecialStringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\StringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\VariableTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
+\newcommand{\VerbatimStringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\WarningTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\usepackage{graphicx,grffile}
+\makeatletter
+\def\maxwidth{\ifdim\Gin@nat@width>\linewidth\linewidth\else\Gin@nat@width\fi}
+\def\maxheight{\ifdim\Gin@nat@height>\textheight\textheight\else\Gin@nat@height\fi}
+\makeatother
+% Scale images if necessary, so that they will not overflow the page
+% margins by default, and it is still possible to overwrite the defaults
+% using explicit options in \includegraphics[width, height, ...]{}
+\setkeys{Gin}{width=\maxwidth,height=\maxheight,keepaspectratio}
+\setlength{\emergencystretch}{3em}  % prevent overfull lines
+\providecommand{\tightlist}{%
+  \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
+\setcounter{secnumdepth}{0}
+% Redefines (sub)paragraphs to behave more like sections
+\ifx\paragraph\undefined\else
+\let\oldparagraph\paragraph
+\renewcommand{\paragraph}[1]{\oldparagraph{#1}\mbox{}}
+\fi
+\ifx\subparagraph\undefined\else
+\let\oldsubparagraph\subparagraph
+\renewcommand{\subparagraph}[1]{\oldsubparagraph{#1}\mbox{}}
+\fi
+
+% set default figure placement to htbp
+\makeatletter
+\def\fps@figure{htbp}
+\makeatother
+
+\usepackage{etoolbox}
+\makeatletter
+\providecommand{\subtitle}[1]{% add subtitle to \maketitle
+  \apptocmd{\@title}{\par {\large #1 \par}}{}{}
+}
+\makeatother
+\usepackage{booktabs}
+\usepackage{longtable}
+\usepackage{array}
+\usepackage{multirow}
+\usepackage{wrapfig}
+\usepackage{float}
+\usepackage{colortbl}
+\usepackage{pdflscape}
+\usepackage{tabu}
+\usepackage{threeparttable}
+\usepackage{threeparttablex}
+\usepackage[normalem]{ulem}
+\usepackage{makecell}
+\usepackage{xcolor}
+
+\title{A Climate Change Model}
+\providecommand{\subtitle}[1]{}
+\subtitle{ESM 204: Homework \#4}
+\author{Bobby Miyashiro \& Keene Morrow}
+\date{5/27/2020}
+
+\begin{document}
+\maketitle
+
+ESM 204: Homework \#4 (A Climate Change Model) Professor Christopher
+Costello Due May 27, 8:00 am
+
+This problem set asks you to build a climate-economy model with risk and
+discounting and to conduct sensitivity analysis on it. Hint: I strongly
+recommend using R and building ``functions'' for each of the equations
+you see below. Under BAU, let tau(t) be the temperature in year t (t =
+0, 1, \ldots{}, 200) relative to the temperature at time 0. Suppose
+
+tau(t) = min(Tt/100, T) (1)
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{# Relative temperature change by year}
+\NormalTok{rel_temp_t <-}\StringTok{ }\ControlFlowTok{function}\NormalTok{(T, year)\{}
+\NormalTok{  temp_t =}\StringTok{ }\KeywordTok{ifelse}\NormalTok{(year }\OperatorTok{<=}\StringTok{ }\DecValTok{100}\NormalTok{, year }\OperatorTok{*}\StringTok{ }\NormalTok{(T }\OperatorTok{/}\StringTok{ }\DecValTok{100}\NormalTok{), T)}
+  \KeywordTok{return}\NormalTok{(temp_t)}
+\NormalTok{\}}
+
+\NormalTok{tau_t <-}\StringTok{ }\ControlFlowTok{function}\NormalTok{(Tt, T)\{}
+\NormalTok{  rel_temp =}\StringTok{ }\KeywordTok{min}\NormalTok{(Tt }\OperatorTok{/}\StringTok{ }\DecValTok{100}\NormalTok{, T)}
+  \KeywordTok{return}\NormalTok{(rel_temp)}
+\NormalTok{\}}
+\end{Highlighting}
+\end{Shaded}
+
+Where T is the BAU temperature increase at year 100. For example, if T =
+5 then the temperature increases over time (linearly) until year 100,
+when it flattens out at 5.
+
+The hotter it is, the more it affects daily life and it starts to eat
+away at economic activity. Let K(t) be the fraction of economic activity
+that is retained in a year if the temperature is tau (t), given by
+
+K(t) = exp(−beta * tau(t)\^{}2) (2)
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{# Fraction of economic activity retained}
+\NormalTok{K_t <-}\StringTok{ }\ControlFlowTok{function}\NormalTok{(beta, tau_t)\{}
+\NormalTok{  K_t =}\StringTok{ }\KeywordTok{exp}\NormalTok{(}\OperatorTok{-}\NormalTok{beta }\OperatorTok{*}\StringTok{ }\NormalTok{tau_t}\OperatorTok{^}\DecValTok{2}\NormalTok{)}
+  \KeywordTok{return}\NormalTok{(K_t)}
+\NormalTok{\}}
+\end{Highlighting}
+\end{Shaded}
+
+Economic activity (``consumption'') grows over time at rate g, but is
+reduced by K (see above), so total consumption at time t is:
+
+C(t) = K(t)exp(gt) (3)
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{# Consumption retained}
+\NormalTok{C_t <-}\StringTok{ }\ControlFlowTok{function}\NormalTok{(K_t, g, t)\{}
+\NormalTok{  C_t <-}\StringTok{ }\NormalTok{K_t }\OperatorTok{*}\StringTok{ }\KeywordTok{exp}\NormalTok{(g}\OperatorTok{*}\NormalTok{t)}
+  \KeywordTok{return}\NormalTok{(C_t)}
+\NormalTok{\}}
+\end{Highlighting}
+\end{Shaded}
+
+Society's utility from consumption is given by the function
+
+U(C) = ( C\^{}(1 − eta) ) / (1 - eta) (4)
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{# Utility from consumption}
+\NormalTok{U_C <-}\StringTok{ }\ControlFlowTok{function}\NormalTok{(C, eta)\{}
+\NormalTok{  U_C =}\StringTok{ }\NormalTok{(C }\OperatorTok{^}\NormalTok{(}\DecValTok{1} \OperatorTok{-}\StringTok{ }\NormalTok{eta)) }\OperatorTok{/}\StringTok{ }\NormalTok{(}\DecValTok{1} \OperatorTok{-}\StringTok{ }\NormalTok{eta)}
+  \KeywordTok{return}\NormalTok{(U_C)}
+\NormalTok{\}}
+\end{Highlighting}
+\end{Shaded}
+
+For some analyses below, you may wish to discount utility to present
+value. The discount rate is given by the Ramsey Rule:
+
+r = delta + eta * g (5)
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{ramsey <-}\StringTok{ }\ControlFlowTok{function}\NormalTok{(delta, eta, g)\{}
+\NormalTok{  r =}\StringTok{ }\NormalTok{delta }\OperatorTok{+}\StringTok{ }\NormalTok{eta }\OperatorTok{*}\StringTok{ }\NormalTok{g}
+  \KeywordTok{return}\NormalTok{(r)}
+\NormalTok{\}}
+\end{Highlighting}
+\end{Shaded}
+
+You will build a climate-economy model using the equations above. Use
+the following base case parameters for this model: delta = 0.005, eta =
+0.5, g = 0.01, beta = 0.05.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{delta <-}\StringTok{ }\FloatTok{0.005}
+\NormalTok{eta <-}\StringTok{ }\FloatTok{0.5}
+\NormalTok{g <-}\StringTok{ }\FloatTok{0.01}
+\NormalTok{beta <-}\StringTok{ }\FloatTok{0.05}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{center}\rule{0.5\linewidth}{0.5pt}\end{center}
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\tightlist
+\item
+  Plots
+\end{enumerate}
+
+\begin{enumerate}
+\def\labelenumi{(\alph{enumi})}
+\tightlist
+\item
+  Plot temperature over time for no climate change (T = 0), with modest
+  climate change (T = 2), and with extreme climate change (T = 8).
+\end{enumerate}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{df_plots <-}\StringTok{ }\NormalTok{df }\OperatorTok{%>%}
+\StringTok{  }\KeywordTok{mutate}\NormalTok{(}\DataTypeTok{tau_t_0 =} \KeywordTok{rel_temp_t}\NormalTok{(}\DecValTok{0}\NormalTok{, t),}
+         \DataTypeTok{tau_t_2 =} \KeywordTok{rel_temp_t}\NormalTok{(}\DecValTok{2}\NormalTok{, t),}
+         \DataTypeTok{tau_t_8 =} \KeywordTok{rel_temp_t}\NormalTok{(}\DecValTok{8}\NormalTok{, t))}
+
+\CommentTok{# Plot: Temperature over time}
+
+\KeywordTok{ggplot}\NormalTok{(}\DataTypeTok{data =}\NormalTok{ df_plots) }\OperatorTok{+}
+\StringTok{  }\KeywordTok{geom_line}\NormalTok{(}\KeywordTok{aes}\NormalTok{(}\DataTypeTok{x =}\NormalTok{ t,}
+                \DataTypeTok{y =}\NormalTok{ tau_t_}\DecValTok{0}\NormalTok{),}
+            \DataTypeTok{color =} \StringTok{"blue"}\NormalTok{) }\OperatorTok{+}
+\StringTok{  }\KeywordTok{geom_line}\NormalTok{(}\KeywordTok{aes}\NormalTok{(}\DataTypeTok{x =}\NormalTok{ t,}
+                \DataTypeTok{y =}\NormalTok{ tau_t_}\DecValTok{2}\NormalTok{),}
+            \DataTypeTok{color =} \StringTok{"orangered"}\NormalTok{) }\OperatorTok{+}
+\StringTok{  }\KeywordTok{geom_line}\NormalTok{(}\KeywordTok{aes}\NormalTok{(}\DataTypeTok{x =}\NormalTok{ t,}
+                \DataTypeTok{y =}\NormalTok{ tau_t_}\DecValTok{8}\NormalTok{),}
+            \DataTypeTok{color =} \StringTok{"dark red"}\NormalTok{) }\OperatorTok{+}
+\StringTok{  }\KeywordTok{labs}\NormalTok{(}\DataTypeTok{title =} \StringTok{"Relative Temperature"}\NormalTok{,}
+       \CommentTok{# subtitle = "",}
+       \DataTypeTok{x =} \StringTok{"Year"}\NormalTok{,}
+       \DataTypeTok{y =} \StringTok{"Relative Temperature"}\NormalTok{,}
+       \DataTypeTok{caption =} \StringTok{"Figure 1. Relative temperature change over time for various climate change scenarios.}\CharTok{\textbackslash{}n}\StringTok{ESM 204 Spring 2020}\CharTok{\textbackslash{}n}\StringTok{Bobby Miyashiro & Keene Morrow"}\NormalTok{) }\OperatorTok{+}
+\StringTok{  }\CommentTok{# scale_x_continuous(expand = c(0, 0)) +}
+\StringTok{  }\KeywordTok{theme_minimal}\NormalTok{() }\OperatorTok{+}
+\StringTok{  }\KeywordTok{theme}\NormalTok{(}\DataTypeTok{plot.caption =} \KeywordTok{element_text}\NormalTok{(}\DataTypeTok{hjust =} \DecValTok{0}\NormalTok{, }\DataTypeTok{face =} \StringTok{"italic"}\NormalTok{))}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{esm204_HW4_miyashiro_morrow_files/figure-latex/unnamed-chunk-7-1.pdf}
+
+\begin{enumerate}
+\def\labelenumi{(\alph{enumi})}
+\setcounter{enumi}{1}
+\tightlist
+\item
+  Plot consumption over time for no climate change, modest climate
+  change, and extreme climate change.
+\end{enumerate}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{df_plots <-}\StringTok{ }\NormalTok{df_plots }\OperatorTok{%>%}
+\StringTok{  }\KeywordTok{mutate}\NormalTok{(}\DataTypeTok{K_0 =} \KeywordTok{K_t}\NormalTok{(beta, tau_t_}\DecValTok{0}\NormalTok{),}
+         \DataTypeTok{K_2 =} \KeywordTok{K_t}\NormalTok{(beta, tau_t_}\DecValTok{2}\NormalTok{),}
+         \DataTypeTok{K_8 =} \KeywordTok{K_t}\NormalTok{(beta, tau_t_}\DecValTok{8}\NormalTok{),}
+         \DataTypeTok{C_0 =} \KeywordTok{C_t}\NormalTok{(K_}\DecValTok{0}\NormalTok{, g, t),}
+         \DataTypeTok{C_2 =} \KeywordTok{C_t}\NormalTok{(K_}\DecValTok{2}\NormalTok{, g, t),}
+         \DataTypeTok{C_8 =} \KeywordTok{C_t}\NormalTok{(K_}\DecValTok{8}\NormalTok{, g, t))}
+
+\CommentTok{# Plot: Consumption}
+\KeywordTok{ggplot}\NormalTok{(}\DataTypeTok{data =}\NormalTok{ df_plots) }\OperatorTok{+}
+\StringTok{  }\KeywordTok{geom_line}\NormalTok{(}\KeywordTok{aes}\NormalTok{(}\DataTypeTok{x =}\NormalTok{ t,}
+                \DataTypeTok{y =}\NormalTok{ C_}\DecValTok{0}\NormalTok{),}
+            \DataTypeTok{color =} \StringTok{"blue"}\NormalTok{) }\OperatorTok{+}
+\StringTok{  }\KeywordTok{geom_line}\NormalTok{(}\KeywordTok{aes}\NormalTok{(}\DataTypeTok{x =}\NormalTok{ t,}
+                \DataTypeTok{y =}\NormalTok{ C_}\DecValTok{2}\NormalTok{),}
+            \DataTypeTok{color =} \StringTok{"orangered"}\NormalTok{) }\OperatorTok{+}
+\StringTok{  }\KeywordTok{geom_line}\NormalTok{(}\KeywordTok{aes}\NormalTok{(}\DataTypeTok{x =}\NormalTok{ t,}
+                \DataTypeTok{y =}\NormalTok{ C_}\DecValTok{8}\NormalTok{),}
+            \DataTypeTok{color =} \StringTok{"dark red"}\NormalTok{) }\OperatorTok{+}
+\StringTok{  }\KeywordTok{labs}\NormalTok{(}\DataTypeTok{title =} \StringTok{"Consumption"}\NormalTok{,}
+       \CommentTok{# subtitle = "",}
+       \DataTypeTok{x =} \StringTok{"Year"}\NormalTok{,}
+       \DataTypeTok{y =} \StringTok{"Retained Consumption"}\NormalTok{,}
+       \DataTypeTok{caption =} \StringTok{"Figure 2. Retained consumption over time for various climate change scenarios.}\CharTok{\textbackslash{}n}\StringTok{Temperature change in year 100: blue = 0, orange = 2, red = 8}\CharTok{\textbackslash{}n\textbackslash{}n}\StringTok{ESM 204 Spring 2020}\CharTok{\textbackslash{}n}\StringTok{Bobby Miyashiro & Keene Morrow"}\NormalTok{) }\OperatorTok{+}
+\StringTok{  }\CommentTok{# scale_x_continuous(expand = c(0, 0)) +}
+\StringTok{  }\KeywordTok{theme_minimal}\NormalTok{() }\OperatorTok{+}
+\StringTok{  }\KeywordTok{theme}\NormalTok{(}\DataTypeTok{plot.caption =} \KeywordTok{element_text}\NormalTok{(}\DataTypeTok{hjust =} \DecValTok{0}\NormalTok{, }\DataTypeTok{face =} \StringTok{"italic"}\NormalTok{))}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{esm204_HW4_miyashiro_morrow_files/figure-latex/unnamed-chunk-8-1.pdf}
+
+\begin{enumerate}
+\def\labelenumi{(\alph{enumi})}
+\setcounter{enumi}{2}
+\tightlist
+\item
+  Plot undiscounted utility over time for no climate change, modest
+  climate change, and extreme climate change.
+\end{enumerate}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{df_plots <-}\StringTok{ }\NormalTok{df_plots }\OperatorTok{%>%}
+\StringTok{  }\KeywordTok{mutate}\NormalTok{(}\DataTypeTok{U_0 =} \KeywordTok{U_C}\NormalTok{(C_}\DecValTok{0}\NormalTok{, eta),}
+         \DataTypeTok{U_2 =} \KeywordTok{U_C}\NormalTok{(C_}\DecValTok{2}\NormalTok{, eta),}
+         \DataTypeTok{U_8 =} \KeywordTok{U_C}\NormalTok{(C_}\DecValTok{8}\NormalTok{, eta))}
+
+\CommentTok{# Plot: undiscounted utility}
+\KeywordTok{ggplot}\NormalTok{(}\DataTypeTok{data =}\NormalTok{ df_plots) }\OperatorTok{+}
+\StringTok{  }\KeywordTok{geom_line}\NormalTok{(}\KeywordTok{aes}\NormalTok{(}\DataTypeTok{x =}\NormalTok{ t,}
+                \DataTypeTok{y =}\NormalTok{ U_}\DecValTok{0}\NormalTok{),}
+            \DataTypeTok{color =} \StringTok{"blue"}\NormalTok{) }\OperatorTok{+}
+\StringTok{  }\KeywordTok{geom_line}\NormalTok{(}\KeywordTok{aes}\NormalTok{(}\DataTypeTok{x =}\NormalTok{ t,}
+                \DataTypeTok{y =}\NormalTok{ U_}\DecValTok{2}\NormalTok{),}
+            \DataTypeTok{color =} \StringTok{"orangered"}\NormalTok{) }\OperatorTok{+}
+\StringTok{  }\KeywordTok{geom_line}\NormalTok{(}\KeywordTok{aes}\NormalTok{(}\DataTypeTok{x =}\NormalTok{ t,}
+                \DataTypeTok{y =}\NormalTok{ U_}\DecValTok{8}\NormalTok{),}
+            \DataTypeTok{color =} \StringTok{"dark red"}\NormalTok{) }\OperatorTok{+}
+\StringTok{  }\KeywordTok{labs}\NormalTok{(}\CommentTok{#title = "",}
+       \CommentTok{# subtitle = "",}
+       \DataTypeTok{x =} \StringTok{"Year"}\NormalTok{,}
+       \DataTypeTok{y =} \StringTok{"Utility (Undiscounted)"}\NormalTok{,}
+       \DataTypeTok{caption =} \StringTok{"Figure 3. Undiscounted utility over time for various climate change scenarios.}\CharTok{\textbackslash{}n}\StringTok{Temperature change in year 100: blue = 0, orange = 2, red = 8}\CharTok{\textbackslash{}n\textbackslash{}n}\StringTok{ESM 204 Spring 2020}\CharTok{\textbackslash{}n}\StringTok{Bobby Miyashiro & Keene Morrow"}\NormalTok{) }\OperatorTok{+}
+\StringTok{  }\CommentTok{# scale_x_continuous(expand = c(0, 0)) +}
+\StringTok{  }\KeywordTok{theme_minimal}\NormalTok{() }\OperatorTok{+}
+\StringTok{  }\KeywordTok{theme}\NormalTok{(}\DataTypeTok{plot.caption =} \KeywordTok{element_text}\NormalTok{(}\DataTypeTok{hjust =} \DecValTok{0}\NormalTok{, }\DataTypeTok{face =} \StringTok{"italic"}\NormalTok{))}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{esm204_HW4_miyashiro_morrow_files/figure-latex/unnamed-chunk-9-1.pdf}
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\setcounter{enumi}{1}
+\tightlist
+\item
+  Analysis
+\end{enumerate}
+
+\begin{enumerate}
+\def\labelenumi{(\alph{enumi})}
+\tightlist
+\item
+  Suppose T = 4.4. In other words, suppose we know for sure that under
+  BAU, climate change will eventually lead to a 4.4 degree increase in
+  temperature.
+\end{enumerate}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{PV <-}\StringTok{ }\ControlFlowTok{function}\NormalTok{(x, r, t)\{}
+\NormalTok{  PV =}\StringTok{ }\NormalTok{x}\OperatorTok{/}\NormalTok{(}\DecValTok{1}\OperatorTok{+}\NormalTok{r)}\OperatorTok{^}\NormalTok{t}
+  \KeywordTok{return}\NormalTok{(PV)}
+\NormalTok{\}}
+\end{Highlighting}
+\end{Shaded}
+
+What is the present value (i.e.~discounted) utility over the next 200
+years with climate change?
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{#Present value utility with 4.4 degree increase in temp from climate change}
+\NormalTok{BAU_}\FloatTok{4.4}\NormalTok{ <-}\StringTok{ }\NormalTok{df }\OperatorTok{%>%}\StringTok{ }
+\StringTok{  }\KeywordTok{mutate}\NormalTok{(}\DataTypeTok{tau_t_4.4 =} \KeywordTok{rel_temp_t}\NormalTok{(}\FloatTok{4.4}\NormalTok{, t),}
+         \DataTypeTok{K_4.4 =} \KeywordTok{K_t}\NormalTok{(beta, tau_t_}\FloatTok{4.4}\NormalTok{),}
+         \DataTypeTok{C_4.4 =} \KeywordTok{C_t}\NormalTok{(K_}\FloatTok{4.4}\NormalTok{, g, t),}
+         \DataTypeTok{U_4.4 =} \KeywordTok{U_C}\NormalTok{(C_}\FloatTok{4.4}\NormalTok{, eta),}
+         \DataTypeTok{PV_4.4 =} \KeywordTok{PV}\NormalTok{(U_}\FloatTok{4.4}\NormalTok{, }\KeywordTok{ramsey}\NormalTok{(delta, eta, g), t))}
+
+\NormalTok{PV_BAU_}\FloatTok{4.4}\NormalTok{ <-}\StringTok{ }\KeywordTok{sum}\NormalTok{(BAU_}\FloatTok{4.4}\OperatorTok{$}\NormalTok{PV_}\FloatTok{4.4}\NormalTok{)}
+\CommentTok{#PV_BAU_4.4 is 198.661}
+\end{Highlighting}
+\end{Shaded}
+
+The present value utility over the next 200 years is found by plugging a
+T of 4.4 into the above equations and discounting over 200 years
+resulting in a PV of \$198.66.
+
+What is the present value utility without climate change?
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{#Present value of utility without climate, hence 0 degree increase}
+\NormalTok{BAU_no_cc <-}\StringTok{ }\NormalTok{df }\OperatorTok{%>%}\StringTok{ }
+\StringTok{  }\KeywordTok{mutate}\NormalTok{(}\DataTypeTok{tau_t_no_cc =} \KeywordTok{rel_temp_t}\NormalTok{(}\DecValTok{0}\NormalTok{, t),}
+         \DataTypeTok{K_no_cc =} \KeywordTok{K_t}\NormalTok{(beta, tau_t_no_cc),}
+         \DataTypeTok{C_no_cc =} \KeywordTok{C_t}\NormalTok{(K_no_cc, g, t),}
+         \DataTypeTok{U_no_cc =} \KeywordTok{U_C}\NormalTok{(C_no_cc, eta),}
+         \DataTypeTok{PV_no_cc =} \KeywordTok{PV}\NormalTok{(U_no_cc, }\KeywordTok{ramsey}\NormalTok{(delta, eta, g), t))}
+
+\NormalTok{PV_no_cc <-}\StringTok{ }\KeywordTok{sum}\NormalTok{(BAU_no_cc}\OperatorTok{$}\NormalTok{PV_no_cc)}
+\end{Highlighting}
+\end{Shaded}
+
+The present value utilty over the next 200 years without climate change
+is found by plugging a T of 0 into the above equations and discounting
+over 200 years resulting in a PV of \$255.27.
+
+What is the percentage loss in present value utility from climate change
+(call this L)?
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{# Percent loss }
+\NormalTok{L_}\FloatTok{4.4}\NormalTok{ <-}\StringTok{ }\NormalTok{((PV_no_cc }\OperatorTok{-}\StringTok{ }\NormalTok{PV_BAU_}\FloatTok{4.4}\NormalTok{)}\OperatorTok{/}\NormalTok{PV_no_cc)}\OperatorTok{*}\DecValTok{100}
+\end{Highlighting}
+\end{Shaded}
+
+The percentage loss, in this case represented as L, is the difference
+between PV with no climate change and PV with a temperature increase of
+4.4, all divided by a PV with no climate change to result in 22.18\%
+loss.
+
+\begin{enumerate}
+\def\labelenumi{(\alph{enumi})}
+\setcounter{enumi}{1}
+\tightlist
+\item
+  Now show how sensitive your calculation of L is to the following
+  parameters: T, g, eta, and beta. To do so, calculate the \% change in
+  L that arises from a 10\% increase in each of these parameters.
+\end{enumerate}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{# Present value utility with 4.84 degree increase in temp from climate change}
+\NormalTok{BAU_}\FloatTok{4.84}\NormalTok{ <-}\StringTok{ }\NormalTok{df }\OperatorTok{%>%}\StringTok{ }
+\StringTok{  }\KeywordTok{mutate}\NormalTok{(}\DataTypeTok{tau_t_4.84 =} \KeywordTok{rel_temp_t}\NormalTok{(}\FloatTok{4.84}\NormalTok{, t),}
+         \DataTypeTok{K_4.84 =} \KeywordTok{K_t}\NormalTok{(beta, tau_t_}\FloatTok{4.84}\NormalTok{),}
+         \DataTypeTok{C_4.84 =} \KeywordTok{C_t}\NormalTok{(K_}\FloatTok{4.84}\NormalTok{, g, t),}
+         \DataTypeTok{U_4.84 =} \KeywordTok{U_C}\NormalTok{(C_}\FloatTok{4.84}\NormalTok{, eta),}
+         \DataTypeTok{PV_4.84 =} \KeywordTok{PV}\NormalTok{(U_}\FloatTok{4.84}\NormalTok{, }\KeywordTok{ramsey}\NormalTok{(delta, eta, g), t))}
+
+\NormalTok{PV_BAU_}\FloatTok{4.84}\NormalTok{ <-}\StringTok{ }\KeywordTok{sum}\NormalTok{(BAU_}\FloatTok{4.84}\OperatorTok{$}\NormalTok{PV_}\FloatTok{4.84}\NormalTok{)}
+
+\CommentTok{# Percent loss }
+\NormalTok{L_}\FloatTok{4.84}\NormalTok{ <-}\StringTok{ }\NormalTok{((PV_no_cc }\OperatorTok{-}\StringTok{ }\NormalTok{PV_BAU_}\FloatTok{4.84}\NormalTok{)}\OperatorTok{/}\NormalTok{PV_no_cc)}\OperatorTok{*}\DecValTok{100}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{sen_test <-}\StringTok{ }\ControlFlowTok{function}\NormalTok{(Temp, g, eta, beta, }\DataTypeTok{delta =} \FloatTok{0.005}\NormalTok{)\{}
+\NormalTok{  df <-}\StringTok{ }\KeywordTok{data.frame}\NormalTok{(}\DataTypeTok{t =} \KeywordTok{seq}\NormalTok{(}\DecValTok{0}\NormalTok{, }\DecValTok{200}\NormalTok{, }\DataTypeTok{by =} \DecValTok{1}\NormalTok{))}
+  
+\NormalTok{  T_no_cc <-}\StringTok{ }\DecValTok{0}
+\NormalTok{  g_no_cc <-}\StringTok{ }\FloatTok{0.01}
+\NormalTok{  eta_no_cc <-}\StringTok{ }\FloatTok{0.5}
+\NormalTok{  beta_no_cc <-}\StringTok{ }\FloatTok{0.05}
+\NormalTok{  delta_no_cc <-}\StringTok{ }\FloatTok{0.005}
+  
+\NormalTok{  BAU_no_cc <-}\StringTok{ }\NormalTok{df }\OperatorTok{%>%}\StringTok{ }
+\StringTok{    }\KeywordTok{mutate}\NormalTok{(}\DataTypeTok{tau_t_no_cc =} \KeywordTok{rel_temp_t}\NormalTok{(T_no_cc, t),}
+           \DataTypeTok{K_no_cc =} \KeywordTok{K_t}\NormalTok{(beta_no_cc, tau_t_no_cc),}
+           \DataTypeTok{C_no_cc =} \KeywordTok{C_t}\NormalTok{(K_no_cc, g_no_cc, t),}
+           \DataTypeTok{U_no_cc =} \KeywordTok{U_C}\NormalTok{(C_no_cc, eta_no_cc),}
+           \DataTypeTok{PV_no_cc =} \KeywordTok{PV}\NormalTok{(U_no_cc, }\KeywordTok{ramsey}\NormalTok{(delta_no_cc, eta_no_cc, g_no_cc), t))}
+  
+\NormalTok{  PV_no_cc <-}\StringTok{ }\KeywordTok{sum}\NormalTok{(BAU_no_cc}\OperatorTok{$}\NormalTok{PV_no_cc)}
+  
+\NormalTok{  BAU <-}\StringTok{ }\NormalTok{df }\OperatorTok{%>%}\StringTok{ }
+\StringTok{    }\KeywordTok{mutate}\NormalTok{(}\DataTypeTok{tau_t =} \KeywordTok{rel_temp_t}\NormalTok{(Temp, t),}
+           \DataTypeTok{K =} \KeywordTok{K_t}\NormalTok{(beta, tau_t),}
+           \DataTypeTok{C =} \KeywordTok{C_t}\NormalTok{(K, g, t),}
+           \DataTypeTok{U =} \KeywordTok{U_C}\NormalTok{(C, eta),}
+           \DataTypeTok{PV =} \KeywordTok{PV}\NormalTok{(U, }\KeywordTok{ramsey}\NormalTok{(delta, eta, g), t))}
+  
+\NormalTok{  PV_BAU <-}\StringTok{ }\KeywordTok{sum}\NormalTok{(BAU}\OperatorTok{$}\NormalTok{PV)}
+  
+\NormalTok{  L =}\StringTok{ }\NormalTok{((PV_no_cc }\OperatorTok{-}\StringTok{ }\NormalTok{PV_BAU)}\OperatorTok{/}\NormalTok{PV_no_cc)}\OperatorTok{*}\DecValTok{100}
+  
+  \KeywordTok{return}\NormalTok{(L)}
+\NormalTok{\}}
+
+\NormalTok{df_2b <-}\StringTok{ }\KeywordTok{data.frame}\NormalTok{(}\DataTypeTok{increase =} \KeywordTok{c}\NormalTok{(}\StringTok{"none"}\NormalTok{, }\StringTok{"T"}\NormalTok{, }\StringTok{"g"}\NormalTok{, }\StringTok{"eta"}\NormalTok{, }\StringTok{"beta"}\NormalTok{)) }\OperatorTok{%>%}
+\StringTok{  }\KeywordTok{mutate}\NormalTok{(}\DataTypeTok{T_sen =} \KeywordTok{as.numeric}\NormalTok{(}\KeywordTok{c}\NormalTok{(}\FloatTok{4.4}\NormalTok{, }\FloatTok{4.84}\NormalTok{, }\FloatTok{4.4}\NormalTok{, }\FloatTok{4.4}\NormalTok{, }\FloatTok{4.4}\NormalTok{)),}
+         \DataTypeTok{g_sen =} \KeywordTok{as.numeric}\NormalTok{(}\KeywordTok{c}\NormalTok{(g, g, g }\OperatorTok{*}\StringTok{ }\FloatTok{1.1}\NormalTok{, g, g)),}
+         \DataTypeTok{eta_sen =} \KeywordTok{as.numeric}\NormalTok{(}\KeywordTok{c}\NormalTok{(eta, eta, eta, eta }\OperatorTok{*}\StringTok{ }\FloatTok{1.1}\NormalTok{, eta)),}
+         \DataTypeTok{beta_sen =} \KeywordTok{as.numeric}\NormalTok{(}\KeywordTok{c}\NormalTok{(beta, beta, beta, beta, beta }\OperatorTok{*}\StringTok{ }\FloatTok{1.1}\NormalTok{)))}
+
+
+
+\NormalTok{df_2b <-}\StringTok{ }\NormalTok{df_2b }\OperatorTok{%>%}\StringTok{ }
+\StringTok{  }\KeywordTok{mutate}\NormalTok{(}\DataTypeTok{L_KM =} \KeywordTok{c}\NormalTok{(}\KeywordTok{sen_test}\NormalTok{(df_2b}\OperatorTok{$}\NormalTok{T_sen[}\DecValTok{1}\NormalTok{], df_2b}\OperatorTok{$}\NormalTok{g_sen[}\DecValTok{1}\NormalTok{], df_2b}\OperatorTok{$}\NormalTok{eta_sen[}\DecValTok{1}\NormalTok{], df_2b}\OperatorTok{$}\NormalTok{beta_sen[}\DecValTok{1}\NormalTok{], delta),}
+                  \KeywordTok{sen_test}\NormalTok{(df_2b}\OperatorTok{$}\NormalTok{T_sen[}\DecValTok{2}\NormalTok{], df_2b}\OperatorTok{$}\NormalTok{g_sen[}\DecValTok{2}\NormalTok{], df_2b}\OperatorTok{$}\NormalTok{eta_sen[}\DecValTok{2}\NormalTok{], df_2b}\OperatorTok{$}\NormalTok{beta_sen[}\DecValTok{2}\NormalTok{], delta),}
+                  \KeywordTok{sen_test}\NormalTok{(df_2b}\OperatorTok{$}\NormalTok{T_sen[}\DecValTok{3}\NormalTok{], df_2b}\OperatorTok{$}\NormalTok{g_sen[}\DecValTok{3}\NormalTok{], df_2b}\OperatorTok{$}\NormalTok{eta_sen[}\DecValTok{3}\NormalTok{], df_2b}\OperatorTok{$}\NormalTok{beta_sen[}\DecValTok{3}\NormalTok{], delta),}
+                  \KeywordTok{sen_test}\NormalTok{(df_2b}\OperatorTok{$}\NormalTok{T_sen[}\DecValTok{4}\NormalTok{], df_2b}\OperatorTok{$}\NormalTok{g_sen[}\DecValTok{4}\NormalTok{], df_2b}\OperatorTok{$}\NormalTok{eta_sen[}\DecValTok{4}\NormalTok{], df_2b}\OperatorTok{$}\NormalTok{beta_sen[}\DecValTok{4}\NormalTok{], delta),}
+                  \KeywordTok{sen_test}\NormalTok{(df_2b}\OperatorTok{$}\NormalTok{T_sen[}\DecValTok{5}\NormalTok{], df_2b}\OperatorTok{$}\NormalTok{g_sen[}\DecValTok{5}\NormalTok{], df_2b}\OperatorTok{$}\NormalTok{eta_sen[}\DecValTok{5}\NormalTok{], df_2b}\OperatorTok{$}\NormalTok{beta_sen[}\DecValTok{5}\NormalTok{], delta))) }\OperatorTok{%>%}
+\StringTok{  }\KeywordTok{mutate}\NormalTok{(}\DataTypeTok{L_BM =} \KeywordTok{c}\NormalTok{(}\OtherTok{NA}\NormalTok{, }\FloatTok{25.797}\NormalTok{, }\FloatTok{22.181}\NormalTok{, }\FloatTok{19.596}\NormalTok{, }\FloatTok{23.939}\NormalTok{),}
+         \DataTypeTok{L_diff =}\NormalTok{ L_KM }\OperatorTok{-}\StringTok{ }\NormalTok{L_BM)}
+
+\NormalTok{L_no_cc <-}\StringTok{ }\NormalTok{df_2b}\OperatorTok{$}\NormalTok{L_KM[}\DecValTok{1}\NormalTok{]}
+
+\NormalTok{df_2b <-}\StringTok{ }\NormalTok{df_2b }\OperatorTok{%>%}\StringTok{ }
+\StringTok{  }\KeywordTok{rowwise}\NormalTok{() }\OperatorTok{%>%}\StringTok{ }
+\StringTok{  }\KeywordTok{mutate}\NormalTok{(}\DataTypeTok{L_pct =}\NormalTok{ ((L_KM }\OperatorTok{-}\StringTok{ }\NormalTok{L_no_cc)}\OperatorTok{/}\NormalTok{L_no_cc)}\OperatorTok{*}\DecValTok{100}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{table}[H]
+\centering
+\begin{tabular}{l|r}
+\hline
+\multicolumn{2}{c|}{Sensitivity Test: Present Value Utility Lost (L)} \\
+\cline{1-2}
+Adjusted Value & Percent Change in L\\
+\hline
+T & 16.3217768\\
+\hline
+g & -0.1301919\\
+\hline
+eta & -20.3563263\\
+\hline
+beta & 7.9429826\\
+\hline
+\end{tabular}
+\end{table}
+
+The table above shows the percent change in L for a 10\% increase in T,
+g, eta, and beta.
+
+\begin{enumerate}
+\def\labelenumi{(\alph{enumi})}
+\setcounter{enumi}{2}
+\tightlist
+\item
+  Back to the original parameters, suppose we could completely prevent
+  climate change from occurring (so T = 0 instead of T = 4.4) but doing
+  so would require giving up a fraction theta of consumption every year
+  for the next 200 years. What is the maximum value of theta society
+  would be willing to endure every year to completely prevent climate
+  change? Call this theta*.
+\end{enumerate}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{C_t_theta <-}\StringTok{ }\ControlFlowTok{function}\NormalTok{(K_t, g, t, }\DataTypeTok{theta =} \DecValTok{0}\NormalTok{)\{}
+\NormalTok{  C_t <-}\StringTok{ }\NormalTok{(K_t }\OperatorTok{*}\StringTok{ }\KeywordTok{exp}\NormalTok{(g}\OperatorTok{*}\NormalTok{t)) }\OperatorTok{*}\StringTok{ }\NormalTok{(}\DecValTok{1} \OperatorTok{-}\StringTok{ }\NormalTok{theta)}
+  \KeywordTok{return}\NormalTok{(C_t)}
+\NormalTok{\}}
+
+\NormalTok{T_no_cc <-}\StringTok{ }\DecValTok{0}
+\NormalTok{g_no_cc <-}\StringTok{ }\FloatTok{0.01}
+\NormalTok{eta_no_cc <-}\StringTok{ }\FloatTok{0.5}
+\NormalTok{beta_no_cc <-}\StringTok{ }\FloatTok{0.05}
+\NormalTok{delta_no_cc <-}\StringTok{ }\FloatTok{0.005}
+\NormalTok{theta <-}\StringTok{ }\DecValTok{0}
+
+\NormalTok{BAU_no_cc <-}\StringTok{ }\NormalTok{df }\OperatorTok{%>%}\StringTok{ }
+\StringTok{  }\KeywordTok{mutate}\NormalTok{(}\DataTypeTok{tau_t_no_cc =} \KeywordTok{rel_temp_t}\NormalTok{(T_no_cc, t),}
+         \DataTypeTok{K_no_cc =} \KeywordTok{K_t}\NormalTok{(beta_no_cc, tau_t_no_cc),}
+         \DataTypeTok{C_no_cc =} \KeywordTok{C_t_theta}\NormalTok{(K_no_cc, g_no_cc, t, theta),}
+         \DataTypeTok{U_no_cc =} \KeywordTok{U_C}\NormalTok{(C_no_cc, eta_no_cc),}
+         \DataTypeTok{PV_no_cc =} \KeywordTok{PV}\NormalTok{(U_no_cc, }\KeywordTok{ramsey}\NormalTok{(delta_no_cc, eta_no_cc, g_no_cc), t))}
+  
+\NormalTok{PV_BAU_no_cc <-}\StringTok{ }\KeywordTok{sum}\NormalTok{(BAU_no_cc}\OperatorTok{$}\NormalTok{PV)}
+
+\NormalTok{BAU_}\FloatTok{4.4}\NormalTok{ <-}\StringTok{ }\NormalTok{df }\OperatorTok{%>%}\StringTok{ }
+\StringTok{  }\KeywordTok{mutate}\NormalTok{(}\DataTypeTok{tau_t_no_cc =} \KeywordTok{rel_temp_t}\NormalTok{(}\FloatTok{4.4}\NormalTok{, t),}
+         \DataTypeTok{K_no_cc =} \KeywordTok{K_t}\NormalTok{(beta_no_cc, tau_t_no_cc),}
+         \DataTypeTok{C_no_cc =} \KeywordTok{C_t_theta}\NormalTok{(K_no_cc, g_no_cc, t, theta),}
+         \DataTypeTok{U_no_cc =} \KeywordTok{U_C}\NormalTok{(C_no_cc, eta_no_cc),}
+         \DataTypeTok{PV_no_cc =} \KeywordTok{PV}\NormalTok{(U_no_cc, }\KeywordTok{ramsey}\NormalTok{(delta_no_cc, eta_no_cc, g_no_cc), t))}
+
+\NormalTok{PV_BAU_}\FloatTok{4.4}\NormalTok{ <-}\StringTok{ }\KeywordTok{sum}\NormalTok{(BAU_}\FloatTok{4.4}\OperatorTok{$}\NormalTok{PV)}
+
+\NormalTok{theta_vector <-}\StringTok{ }\KeywordTok{seq}\NormalTok{(}\FloatTok{0.3943590}\NormalTok{, }\FloatTok{0.3943600}\NormalTok{, }\DataTypeTok{by =} \FloatTok{0.00000001}\NormalTok{)}
+
+\NormalTok{df_2c <-}\StringTok{ }\KeywordTok{data.frame}\NormalTok{(}\DataTypeTok{theta =} \DecValTok{0}\NormalTok{,}
+                    \DataTypeTok{PV =} \DecValTok{0}\NormalTok{)}
+
+\ControlFlowTok{for}\NormalTok{(i }\ControlFlowTok{in}\NormalTok{ theta_vector)\{}
+\NormalTok{  BAU_reduce <-}\StringTok{ }\NormalTok{df }\OperatorTok{%>%}\StringTok{ }
+\StringTok{  }\KeywordTok{mutate}\NormalTok{(}\DataTypeTok{tau_t_no_cc =} \KeywordTok{rel_temp_t}\NormalTok{(T_no_cc, t),}
+         \DataTypeTok{K_no_cc =} \KeywordTok{K_t}\NormalTok{(beta_no_cc, tau_t_no_cc),}
+         \DataTypeTok{C_no_cc =} \KeywordTok{C_t_theta}\NormalTok{(K_no_cc, g_no_cc, t, i),}
+         \DataTypeTok{U_no_cc =} \KeywordTok{U_C}\NormalTok{(C_no_cc, eta_no_cc),}
+         \DataTypeTok{PV_no_cc =} \KeywordTok{PV}\NormalTok{(U_no_cc, }\KeywordTok{ramsey}\NormalTok{(delta_no_cc, eta_no_cc, g_no_cc), t))}
+  
+\NormalTok{PV_BAU_reduce <-}\StringTok{ }\KeywordTok{sum}\NormalTok{(BAU_reduce}\OperatorTok{$}\NormalTok{PV)}
+
+\NormalTok{df_temp <-}\StringTok{ }\KeywordTok{data.frame}\NormalTok{(}\DataTypeTok{theta =}\NormalTok{ i,}
+                    \DataTypeTok{PV =} \KeywordTok{sum}\NormalTok{(BAU_reduce}\OperatorTok{$}\NormalTok{PV))}
+
+\NormalTok{df_2c <-}\StringTok{ }\NormalTok{df_2c }\OperatorTok{%>%}
+\StringTok{  }\KeywordTok{full_join}\NormalTok{(df_temp)}
+\NormalTok{\}}
+
+\NormalTok{df_2c_sol <-}\StringTok{ }\NormalTok{df_2c }\OperatorTok{%>%}
+\StringTok{  }\KeywordTok{filter}\NormalTok{(}\KeywordTok{round}\NormalTok{(PV, }\DecValTok{4}\NormalTok{) }\OperatorTok{==}\StringTok{ }\FloatTok{198.6612}\NormalTok{)}
+
+\NormalTok{theta_star <-}\StringTok{ }\KeywordTok{mean}\NormalTok{(df_2c_sol}\OperatorTok{$}\NormalTok{theta)}
+\end{Highlighting}
+\end{Shaded}
+
+The maximum value of theta society would be willing to endure every year
+to completely prevent climate change is theta* = 0.3944.
+
+\begin{enumerate}
+\def\labelenumi{(\alph{enumi})}
+\setcounter{enumi}{3}
+\tightlist
+\item
+  Suppose we are uncertain about T, but it has the following probability
+  distribution: T = 2 (with probability .2), T = 4 (with probability
+  .5), and T = 6 (with probability .3). Calculate theta* under
+  uncertainty over T.
+\end{enumerate}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{df_2d <-}\StringTok{ }\KeywordTok{data.frame}\NormalTok{(}\DataTypeTok{T =} \KeywordTok{c}\NormalTok{(}\DecValTok{2}\NormalTok{, }\DecValTok{4}\NormalTok{, }\DecValTok{6}\NormalTok{),}
+                    \DataTypeTok{p =} \KeywordTok{c}\NormalTok{(}\FloatTok{0.2}\NormalTok{, }\FloatTok{0.5}\NormalTok{, }\FloatTok{0.3}\NormalTok{))}
+
+\CommentTok{# Present value utility with 2 degree increase in temp from climate change}
+\NormalTok{BAU_}\DecValTok{2}\NormalTok{ <-}\StringTok{ }\NormalTok{df }\OperatorTok{%>%}\StringTok{ }
+\StringTok{  }\KeywordTok{mutate}\NormalTok{(}\DataTypeTok{tau_t_2 =} \KeywordTok{rel_temp_t}\NormalTok{(}\DecValTok{2}\NormalTok{, t),}
+         \DataTypeTok{K_2 =} \KeywordTok{K_t}\NormalTok{(beta, tau_t_}\DecValTok{2}\NormalTok{),}
+         \DataTypeTok{C_2 =} \KeywordTok{C_t}\NormalTok{(K_}\DecValTok{2}\NormalTok{, g, t),}
+         \DataTypeTok{U_2 =} \KeywordTok{U_C}\NormalTok{(C_}\DecValTok{2}\NormalTok{, eta),}
+         \DataTypeTok{PV_2 =} \KeywordTok{PV}\NormalTok{(U_}\DecValTok{2}\NormalTok{, }\KeywordTok{ramsey}\NormalTok{(delta, eta, g), t))}
+
+\NormalTok{PV_BAU_}\DecValTok{2}\NormalTok{ <-}\StringTok{ }\KeywordTok{sum}\NormalTok{(BAU_}\DecValTok{2}\OperatorTok{$}\NormalTok{PV_}\DecValTok{2}\NormalTok{)}
+\CommentTok{# PV_BAU_2}
+
+\CommentTok{# Present value utility with 4 degree increase in temp from climate change}
+\NormalTok{BAU_}\DecValTok{4}\NormalTok{ <-}\StringTok{ }\NormalTok{df }\OperatorTok{%>%}\StringTok{ }
+\StringTok{  }\KeywordTok{mutate}\NormalTok{(}\DataTypeTok{tau_t_4 =} \KeywordTok{rel_temp_t}\NormalTok{(}\DecValTok{4}\NormalTok{, t),}
+         \DataTypeTok{K_4 =} \KeywordTok{K_t}\NormalTok{(beta, tau_t_}\DecValTok{4}\NormalTok{),}
+         \DataTypeTok{C_4 =} \KeywordTok{C_t}\NormalTok{(K_}\DecValTok{4}\NormalTok{, g, t),}
+         \DataTypeTok{U_4 =} \KeywordTok{U_C}\NormalTok{(C_}\DecValTok{4}\NormalTok{, eta),}
+         \DataTypeTok{PV_4 =} \KeywordTok{PV}\NormalTok{(U_}\DecValTok{4}\NormalTok{, }\KeywordTok{ramsey}\NormalTok{(delta, eta, g), t))}
+
+\NormalTok{PV_BAU_}\DecValTok{4}\NormalTok{ <-}\StringTok{ }\KeywordTok{sum}\NormalTok{(BAU_}\DecValTok{4}\OperatorTok{$}\NormalTok{PV_}\DecValTok{4}\NormalTok{)}
+\CommentTok{# PV_BAU_4}
+
+\CommentTok{# Present value utility with 6 degree increase in temp from climate change}
+\NormalTok{BAU_}\DecValTok{6}\NormalTok{ <-}\StringTok{ }\NormalTok{df }\OperatorTok{%>%}\StringTok{ }
+\StringTok{  }\KeywordTok{mutate}\NormalTok{(}\DataTypeTok{tau_t_6 =} \KeywordTok{rel_temp_t}\NormalTok{(}\DecValTok{6}\NormalTok{, t),}
+         \DataTypeTok{K_6 =} \KeywordTok{K_t}\NormalTok{(beta, tau_t_}\DecValTok{6}\NormalTok{),}
+         \DataTypeTok{C_6 =} \KeywordTok{C_t}\NormalTok{(K_}\DecValTok{6}\NormalTok{, g, t),}
+         \DataTypeTok{U_6 =} \KeywordTok{U_C}\NormalTok{(C_}\DecValTok{6}\NormalTok{, eta),}
+         \DataTypeTok{PV_6 =} \KeywordTok{PV}\NormalTok{(U_}\DecValTok{6}\NormalTok{, }\KeywordTok{ramsey}\NormalTok{(delta, eta, g), t))}
+
+\NormalTok{PV_BAU_}\DecValTok{6}\NormalTok{ <-}\StringTok{ }\KeywordTok{sum}\NormalTok{(BAU_}\DecValTok{6}\OperatorTok{$}\NormalTok{PV_}\DecValTok{6}\NormalTok{)}
+\CommentTok{# PV_BAU_6}
+
+\NormalTok{PV_uncertainty <-}\StringTok{ }\FloatTok{0.2}\OperatorTok{*}\NormalTok{PV_BAU_}\DecValTok{2} \OperatorTok{+}\StringTok{ }\FloatTok{0.5}\OperatorTok{*}\NormalTok{PV_BAU_}\DecValTok{4} \OperatorTok{+}\StringTok{ }\FloatTok{0.3}\OperatorTok{*}\NormalTok{PV_BAU_}\DecValTok{6}
+
+
+\CommentTok{# Testing for theta}
+\NormalTok{theta_vector_}\DecValTok{2}\NormalTok{ <-}\StringTok{ }\KeywordTok{seq}\NormalTok{(}\FloatTok{0.377886}\NormalTok{, }\FloatTok{0.377888}\NormalTok{, }\DataTypeTok{by =} \FloatTok{0.00000001}\NormalTok{)}
+
+\NormalTok{df_2d <-}\StringTok{ }\KeywordTok{data.frame}\NormalTok{(}\DataTypeTok{theta =} \OtherTok{NA}\NormalTok{,}
+                    \DataTypeTok{PV =} \OtherTok{NA}\NormalTok{)}
+
+\ControlFlowTok{for}\NormalTok{(i }\ControlFlowTok{in}\NormalTok{ theta_vector_}\DecValTok{2}\NormalTok{)\{}
+\NormalTok{  BAU_reduce <-}\StringTok{ }\NormalTok{df }\OperatorTok{%>%}\StringTok{ }
+\StringTok{  }\KeywordTok{mutate}\NormalTok{(}\DataTypeTok{tau_t_no_cc =} \KeywordTok{rel_temp_t}\NormalTok{(T_no_cc, t),}
+         \DataTypeTok{K_no_cc =} \KeywordTok{K_t}\NormalTok{(beta_no_cc, tau_t_no_cc),}
+         \DataTypeTok{C_no_cc =} \KeywordTok{C_t_theta}\NormalTok{(K_no_cc, g_no_cc, t, i),}
+         \DataTypeTok{U_no_cc =} \KeywordTok{U_C}\NormalTok{(C_no_cc, eta_no_cc),}
+         \DataTypeTok{PV_no_cc =} \KeywordTok{PV}\NormalTok{(U_no_cc, }\KeywordTok{ramsey}\NormalTok{(delta_no_cc, eta_no_cc, g_no_cc), t))}
+  
+\NormalTok{PV_BAU_reduce <-}\StringTok{ }\KeywordTok{sum}\NormalTok{(BAU_reduce}\OperatorTok{$}\NormalTok{PV)}
+
+\NormalTok{df_temp <-}\StringTok{ }\KeywordTok{data.frame}\NormalTok{(}\DataTypeTok{theta =}\NormalTok{ i,}
+                    \DataTypeTok{PV =} \KeywordTok{sum}\NormalTok{(BAU_reduce}\OperatorTok{$}\NormalTok{PV))}
+
+\NormalTok{df_2d <-}\StringTok{ }\NormalTok{df_2d }\OperatorTok{%>%}
+\StringTok{  }\KeywordTok{full_join}\NormalTok{(df_temp)}
+\NormalTok{\}}
+
+\NormalTok{df_2d_sol <-}\StringTok{ }\NormalTok{df_2d }\OperatorTok{%>%}
+\StringTok{  }\KeywordTok{filter}\NormalTok{(}\KeywordTok{round}\NormalTok{(PV, }\DecValTok{4}\NormalTok{) }\OperatorTok{==}\StringTok{ }\KeywordTok{round}\NormalTok{(PV_uncertainty, }\DecValTok{4}\NormalTok{))}
+
+\NormalTok{theta_star_}\DecValTok{2}\NormalTok{ <-}\StringTok{ }\KeywordTok{mean}\NormalTok{(df_2d_sol}\OperatorTok{$}\NormalTok{theta)}
+\end{Highlighting}
+\end{Shaded}
+
+The maximum value society would be willing to endure every year to
+completely prevent climate change with the uncertainty over T is theta*
+= 0.3779.
+
+\end{document}

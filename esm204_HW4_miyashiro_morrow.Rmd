@@ -1,9 +1,11 @@
 ---
 title: "A Climate Change Model"
-subtitle: "ESM 204: Homework #4"
 author: "Bobby Miyashiro & Keene Morrow"
 date: "5/27/2020"
-output: html_document
+output:
+  pdf_document: default
+  html_document: default
+subtitle: 'ESM 204: Homework #4'
 ---
 
 ```{r setup, include=FALSE}
@@ -31,7 +33,6 @@ rel_temp_t <- function(T, year){
   return(temp_t)
 }
 
-# I'm not sure I follow the provided equation, but here it is anyway - KM
 tau_t <- function(Tt, T){
   rel_temp = min(Tt / 100, T)
   return(rel_temp)
@@ -98,11 +99,8 @@ delta = 0.005, eta = 0.5, g = 0.01, beta = 0.05.
 ```{r}
 delta <- 0.005
 eta <- 0.5
-# original eta was 0.5
 g <- 0.01
-# original g was 0.01
 beta <- 0.05
-# original beta was 0.05
 ```
 
 
@@ -229,12 +227,12 @@ BAU_4.4 <- df %>%
 PV_BAU_4.4 <- sum(BAU_4.4$PV_4.4)
 #PV_BAU_4.4 is 198.661
 ```
-$`r round(PV_BAU_4.4 ,2)`
+The present value utility over the next 200 years is found by plugging a T of 4.4 into the above equations and discounting over 200 years resulting in a PV of $`r round(PV_BAU_4.4 ,2)`.
 
 
 What is the present value utility without climate change?
 ```{r}
-#Present value without utility without climate, hence 0 degree increase
+#Present value of utility without climate, hence 0 degree increase
 BAU_no_cc <- df %>% 
   mutate(tau_t_no_cc = rel_temp_t(0, t),
          K_no_cc = K_t(beta, tau_t_no_cc),
@@ -243,9 +241,8 @@ BAU_no_cc <- df %>%
          PV_no_cc = PV(U_no_cc, ramsey(delta, eta, g), t))
 
 PV_no_cc <- sum(BAU_no_cc$PV_no_cc)
-# PV_no_cc is 255.273
 ```
-$`r round(PV_no_cc ,2)`
+The present value utilty over the next 200 years without climate change is found by plugging a T of 0 into the above equations and discounting over 200 years resulting in a PV of $`r round(PV_no_cc ,2)`.
 
 
 What is the percentage loss in present value utility from climate change (call this L)?
@@ -253,9 +250,8 @@ What is the percentage loss in present value utility from climate change (call t
 # Percent loss 
 L_4.4 <- ((PV_no_cc - PV_BAU_4.4)/PV_no_cc)*100
 
-# L is 22.177
 ```
-`r round(L_4.4 ,2)`% loss
+The percentage loss, in this case represented as L, is the difference between PV with no climate change and PV with a temperature increase of 4.4, all divided by a PV with no climate change to result in `r round(L_4.4 ,2)`% loss.
 
 
 
@@ -271,28 +267,14 @@ BAU_4.84 <- df %>%
          PV_4.84 = PV(U_4.84, ramsey(delta, eta, g), t))
 
 PV_BAU_4.84 <- sum(BAU_4.84$PV_4.84)
-# PV_BAU_4.84
 
 # Percent loss 
 L_4.84 <- ((PV_no_cc - PV_BAU_4.84)/PV_no_cc)*100
 
-# L is 25.797 for a 10% increase in T
-```
-
-```{r}
-# L with a 10% increase in g is 22.181
-# L with a 10% increase in eta is 19.596
-# L with a 10% increase in beta is 23.939
 ```
 
 
-
-
 ```{r}
-# Keene's check of the above
-# 10% change in T is the same, but the others are off between the two calcs (see L_diff).
-# Did you remember to reduce T back to 4.4 for the other calcs?
-
 sen_test <- function(Temp, g, eta, beta, delta = 0.005){
   df <- data.frame(t = seq(0, 200, by = 1))
   
@@ -366,7 +348,7 @@ kable(df_2b_display,
   add_header_above(c("Sensitivity Test: Present Value Utility Lost (L)" = 2))
 
 ```
-
+The table above shows the percent change in L for a 10% increase in T, g, eta, and beta.
 
 
 
@@ -377,25 +359,6 @@ C_t_theta <- function(K_t, g, t, theta = 0){
   C_t <- (K_t * exp(g*t)) * (1 - theta)
   return(C_t)
 }
-
-
-#Find where U becomes negative, holding T at 0 and changing C
-#BAU_prevent_cc <- df %>% 
-#  mutate(
-#    tau_t_prevent_cc = rel_temp_t(0, t),
-#         K_prevent_cc = K_t(beta, tau_t_prevent_cc),
-#         C_prevent_cc = C_t(K_prevent_cc, g, t),
-#         U_prevent_cc = U_C(C_prevent_cc - 0.999*C_prevent_cc, eta),
-#         PV_prevent_cc = PV(U_prevent_cc, ramsey(delta, eta, g), t))
-
-#PV_prevent_cc <- sum(BAU_prevent_cc$PV_prevent_cc)
-
-# prevent_cc <- full_join(BAU_4.4, BAU_no_cc) %>% 
-#   mutate(C_difference = C_no_cc - C_4.4)
-# 
-# df_2c <- data.frame(C_0 = BAU_no_cc$C_no_cc,
-#                     C_4.4 = BAU_4.4$C_4.4) %>%
-#   mutate(diff = C_0 - C_4.4)
 
 T_no_cc <- 0
 g_no_cc <- 0.01
@@ -450,7 +413,7 @@ df_2c_sol <- df_2c %>%
 theta_star <- mean(df_2c_sol$theta)
 ```
 
-theta* = `r round(theta_star, 4)`
+The maximum value of theta society would be willing to endure every year to completely prevent climate change is theta* = `r round(theta_star, 4)`.
 
 
 (d) Suppose we are uncertain about T, but it has the following probability distribution: T = 2 (with probability .2), T = 4 (with probability .5), and T = 6 (with probability .3). Calculate theta* under uncertainty over T.
@@ -524,4 +487,4 @@ df_2d_sol <- df_2d %>%
 theta_star_2 <- mean(df_2d_sol$theta)
 ```
 
-theta* = `r round(theta_star_2, 4)`
+The maximum value society would be willing to endure every year to completely prevent climate change with the uncertainty over T is theta* = `r round(theta_star_2, 4)`.
