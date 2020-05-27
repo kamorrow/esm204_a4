@@ -649,7 +649,13 @@ df_2b &lt;- df_2b %&gt;%
 <ol start="3" style="list-style-type: lower-alpha">
 <li>Back to the original parameters, suppose we could completely prevent climate change from occurring (so T = 0 instead of T = 4.4) but doing so would require giving up a fraction theta of consumption every year for the next 200 years. What is the maximum value of theta society would be willing to endure every year to completely prevent climate change? Call this theta*.</li>
 </ol>
-<pre class="r"><code>#Find where U becomes negative, holding T at 0 and changing C
+<pre class="r"><code>C_t_theta &lt;- function(K_t, g, t, theta = 0){
+  C_t &lt;- (K_t * exp(g*t)) * (1 - theta)
+  return(C_t)
+}
+
+
+#Find where U becomes negative, holding T at 0 and changing C
 #BAU_prevent_cc &lt;- df %&gt;% 
 #  mutate(
 #    tau_t_prevent_cc = rel_temp_t(0, t),
@@ -660,17 +666,135 @@ df_2b &lt;- df_2b %&gt;%
 
 #PV_prevent_cc &lt;- sum(BAU_prevent_cc$PV_prevent_cc)
 
-prevent_cc &lt;- full_join(BAU_4.4, BAU_no_cc) %&gt;% 
-  mutate(C_difference = C_no_cc - C_4.4)
+# prevent_cc &lt;- full_join(BAU_4.4, BAU_no_cc) %&gt;% 
+#   mutate(C_difference = C_no_cc - C_4.4)
+# 
+# df_2c &lt;- data.frame(C_0 = BAU_no_cc$C_no_cc,
+#                     C_4.4 = BAU_4.4$C_4.4) %&gt;%
+#   mutate(diff = C_0 - C_4.4)
 
-df_2c &lt;- data.frame(C_0 = BAU_no_cc$C_no_cc,
-                    C_4.4 = BAU_4.4$C_4.4) %&gt;%
-  mutate(diff = C_0 - C_4.4)</code></pre>
+T_no_cc &lt;- 0
+g_no_cc &lt;- 0.01
+eta_no_cc &lt;- 0.5
+beta_no_cc &lt;- 0.05
+delta_no_cc &lt;- 0.005
+theta &lt;- 0
+
+BAU_no_cc &lt;- df %&gt;% 
+  mutate(tau_t_no_cc = rel_temp_t(T_no_cc, t),
+         K_no_cc = K_t(beta_no_cc, tau_t_no_cc),
+         C_no_cc = C_t_theta(K_no_cc, g_no_cc, t, theta),
+         U_no_cc = U_C(C_no_cc, eta_no_cc),
+         PV_no_cc = PV(U_no_cc, ramsey(delta_no_cc, eta_no_cc, g_no_cc), t))
+  
+PV_BAU_no_cc &lt;- sum(BAU_no_cc$PV)
+
+BAU_4.4 &lt;- df %&gt;% 
+  mutate(tau_t_no_cc = rel_temp_t(4.4, t),
+         K_no_cc = K_t(beta_no_cc, tau_t_no_cc),
+         C_no_cc = C_t_theta(K_no_cc, g_no_cc, t, theta),
+         U_no_cc = U_C(C_no_cc, eta_no_cc),
+         PV_no_cc = PV(U_no_cc, ramsey(delta_no_cc, eta_no_cc, g_no_cc), t))
+
+PV_BAU_4.4 &lt;- sum(BAU_4.4$PV)
+
+theta_vector &lt;- seq(0.3943590, 0.3943600, by = 0.00000001)
+
+df_2c &lt;- data.frame(theta = 0,
+                    PV = 0)
+
+for(i in theta_vector){
+  BAU_reduce &lt;- df %&gt;% 
+  mutate(tau_t_no_cc = rel_temp_t(T_no_cc, t),
+         K_no_cc = K_t(beta_no_cc, tau_t_no_cc),
+         C_no_cc = C_t_theta(K_no_cc, g_no_cc, t, i),
+         U_no_cc = U_C(C_no_cc, eta_no_cc),
+         PV_no_cc = PV(U_no_cc, ramsey(delta_no_cc, eta_no_cc, g_no_cc), t))
+  
+PV_BAU_reduce &lt;- sum(BAU_reduce$PV)
+
+df_temp &lt;- data.frame(theta = i,
+                    PV = sum(BAU_reduce$PV))
+
+df_2c &lt;- df_2c %&gt;%
+  full_join(df_temp)
+}
+
+df_2c_sol &lt;- df_2c %&gt;%
+  filter(round(PV, 4) == 198.6612)
+
+theta_star &lt;- mean(df_2c_sol$theta)</code></pre>
+<p>theta* = 0.3944</p>
 <ol start="4" style="list-style-type: lower-alpha">
 <li>Suppose we are uncertain about T, but it has the following probability distribution: T = 2 (with probability .2), T = 4 (with probability .5), and T = 6 (with probability .3). Calculate theta* under uncertainty over T.</li>
 </ol>
 <pre class="r"><code>df_2d &lt;- data.frame(T = c(2, 4, 6),
-                    p = c(0.2, 0.5, 0.3))</code></pre>
+                    p = c(0.2, 0.5, 0.3))
+
+# Present value utility with 2 degree increase in temp from climate change
+BAU_2 &lt;- df %&gt;% 
+  mutate(tau_t_2 = rel_temp_t(2, t),
+         K_2 = K_t(beta, tau_t_2),
+         C_2 = C_t(K_2, g, t),
+         U_2 = U_C(C_2, eta),
+         PV_2 = PV(U_2, ramsey(delta, eta, g), t))
+
+PV_BAU_2 &lt;- sum(BAU_2$PV_2)
+# PV_BAU_2
+
+# Present value utility with 4 degree increase in temp from climate change
+BAU_4 &lt;- df %&gt;% 
+  mutate(tau_t_4 = rel_temp_t(4, t),
+         K_4 = K_t(beta, tau_t_4),
+         C_4 = C_t(K_4, g, t),
+         U_4 = U_C(C_4, eta),
+         PV_4 = PV(U_4, ramsey(delta, eta, g), t))
+
+PV_BAU_4 &lt;- sum(BAU_4$PV_4)
+# PV_BAU_4
+
+# Present value utility with 6 degree increase in temp from climate change
+BAU_6 &lt;- df %&gt;% 
+  mutate(tau_t_6 = rel_temp_t(6, t),
+         K_6 = K_t(beta, tau_t_6),
+         C_6 = C_t(K_6, g, t),
+         U_6 = U_C(C_6, eta),
+         PV_6 = PV(U_6, ramsey(delta, eta, g), t))
+
+PV_BAU_6 &lt;- sum(BAU_6$PV_6)
+# PV_BAU_6
+
+PV_uncertainty &lt;- 0.2*PV_BAU_2 + 0.5*PV_BAU_4 + 0.3*PV_BAU_6
+
+
+# Testing for theta
+theta_vector_2 &lt;- seq(0.377886, 0.377888, by = 0.00000001)
+
+df_2d &lt;- data.frame(theta = NA,
+                    PV = NA)
+
+for(i in theta_vector_2){
+  BAU_reduce &lt;- df %&gt;% 
+  mutate(tau_t_no_cc = rel_temp_t(T_no_cc, t),
+         K_no_cc = K_t(beta_no_cc, tau_t_no_cc),
+         C_no_cc = C_t_theta(K_no_cc, g_no_cc, t, i),
+         U_no_cc = U_C(C_no_cc, eta_no_cc),
+         PV_no_cc = PV(U_no_cc, ramsey(delta_no_cc, eta_no_cc, g_no_cc), t))
+  
+PV_BAU_reduce &lt;- sum(BAU_reduce$PV)
+
+df_temp &lt;- data.frame(theta = i,
+                    PV = sum(BAU_reduce$PV))
+
+df_2d &lt;- df_2d %&gt;%
+  full_join(df_temp)
+}
+
+df_2d_sol &lt;- df_2d %&gt;%
+  filter(round(PV, 4) == round(PV_uncertainty, 4))
+
+theta_star_2 &lt;- mean(df_2d_sol$theta)</code></pre>
+<p>theta* = 0.3779</p>
 
 
 

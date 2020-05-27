@@ -451,7 +451,7 @@ df_2c_sol <- df_2c %>%
 theta_star <- mean(df_2c_sol$theta)
 ```
 
-theta* = `r theta_star`
+theta* = `r round(theta_star, 4)`
 
 
 (d) Suppose we are uncertain about T, but it has the following probability distribution: T = 2 (with probability .2), T = 4 (with probability .5), and T = 6 (with probability .3). Calculate theta* under uncertainty over T.
@@ -495,4 +495,34 @@ PV_BAU_6 <- sum(BAU_6$PV_6)
 
 PV_uncertainty <- 0.2*PV_BAU_2 + 0.5*PV_BAU_4 + 0.3*PV_BAU_6
 
+
+# Testing for theta
+theta_vector_2 <- seq(0.377886, 0.377888, by = 0.00000001)
+
+df_2d <- data.frame(theta = NA,
+                    PV = NA)
+
+for(i in theta_vector_2){
+  BAU_reduce <- df %>% 
+  mutate(tau_t_no_cc = rel_temp_t(T_no_cc, t),
+         K_no_cc = K_t(beta_no_cc, tau_t_no_cc),
+         C_no_cc = C_t_theta(K_no_cc, g_no_cc, t, i),
+         U_no_cc = U_C(C_no_cc, eta_no_cc),
+         PV_no_cc = PV(U_no_cc, ramsey(delta_no_cc, eta_no_cc, g_no_cc), t))
+  
+PV_BAU_reduce <- sum(BAU_reduce$PV)
+
+df_temp <- data.frame(theta = i,
+                    PV = sum(BAU_reduce$PV))
+
+df_2d <- df_2d %>%
+  full_join(df_temp)
+}
+
+df_2d_sol <- df_2d %>%
+  filter(round(PV, 4) == round(PV_uncertainty, 4))
+
+theta_star_2 <- mean(df_2d_sol$theta)
 ```
+
+theta* = `r round(theta_star_2, 4)`
