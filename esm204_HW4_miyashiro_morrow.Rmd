@@ -374,6 +374,12 @@ df_2b_display <- df_2b %>%
 (c) Back to the original parameters, suppose we could completely prevent climate change from occurring (so T = 0 instead of T = 4.4) but doing so would require giving up a fraction theta of consumption every year for the next 200 years. What is the maximum value of theta society would be willing to endure every year to completely prevent climate change? Call this theta*.
 
 ```{r}
+C_t_theta <- function(K_t, g, t, theta = 0){
+  C_t <- (K_t * exp(g*t)) * (1 - theta)
+  return(C_t)
+}
+
+
 #Find where U becomes negative, holding T at 0 and changing C
 #BAU_prevent_cc <- df %>% 
 #  mutate(
@@ -385,12 +391,51 @@ df_2b_display <- df_2b %>%
 
 #PV_prevent_cc <- sum(BAU_prevent_cc$PV_prevent_cc)
 
-prevent_cc <- full_join(BAU_4.4, BAU_no_cc) %>% 
-  mutate(C_difference = C_no_cc - C_4.4)
+# prevent_cc <- full_join(BAU_4.4, BAU_no_cc) %>% 
+#   mutate(C_difference = C_no_cc - C_4.4)
+# 
+# df_2c <- data.frame(C_0 = BAU_no_cc$C_no_cc,
+#                     C_4.4 = BAU_4.4$C_4.4) %>%
+#   mutate(diff = C_0 - C_4.4)
 
-df_2c <- data.frame(C_0 = BAU_no_cc$C_no_cc,
-                    C_4.4 = BAU_4.4$C_4.4) %>%
-  mutate(diff = C_0 - C_4.4)
+T_no_cc <- 0
+g_no_cc <- 0.01
+eta_no_cc <- 0.5
+beta_no_cc <- 0.05
+delta_no_cc <- 0.005
+theta <- 0
+
+BAU_no_cc <- df %>% 
+  mutate(tau_t_no_cc = rel_temp_t(T_no_cc, t),
+         K_no_cc = K_t(beta_no_cc, tau_t_no_cc),
+         C_no_cc = C_t_theta(K_no_cc, g_no_cc, t, theta),
+         U_no_cc = U_C(C_no_cc, eta_no_cc),
+         PV_no_cc = PV(U_no_cc, ramsey(delta_no_cc, eta_no_cc, g_no_cc), t))
+  
+PV_BAU_no_cc <- sum(BAU_no_cc$PV)
+
+BAU_4.4 <- df %>% 
+  mutate(tau_t_no_cc = rel_temp_t(4.4, t),
+         K_no_cc = K_t(beta_no_cc, tau_t_no_cc),
+         C_no_cc = C_t_theta(K_no_cc, g_no_cc, t, theta),
+         U_no_cc = U_C(C_no_cc, eta_no_cc),
+         PV_no_cc = PV(U_no_cc, ramsey(delta_no_cc, eta_no_cc, g_no_cc), t))
+
+PV_BAU_4.4 <- sum(BAU_4.4$PV)
+
+theta_test <- 0.39
+
+BAU_reduce <- df %>% 
+  mutate(tau_t_no_cc = rel_temp_t(T_no_cc, t),
+         K_no_cc = K_t(beta_no_cc, tau_t_no_cc),
+         C_no_cc = C_t_theta(K_no_cc, g_no_cc, t, theta_test),
+         U_no_cc = U_C(C_no_cc, eta_no_cc),
+         PV_no_cc = PV(U_no_cc, ramsey(delta_no_cc, eta_no_cc, g_no_cc), t))
+  
+PV_BAU_reduce <- sum(BAU_reduce$PV)
+
+
+
 ```
 
 
