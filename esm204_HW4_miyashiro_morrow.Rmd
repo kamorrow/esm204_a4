@@ -459,4 +459,40 @@ theta* = `r theta_star`
 ```{r}
 df_2d <- data.frame(T = c(2, 4, 6),
                     p = c(0.2, 0.5, 0.3))
+
+# Present value utility with 2 degree increase in temp from climate change
+BAU_2 <- df %>% 
+  mutate(tau_t_2 = rel_temp_t(2, t),
+         K_2 = K_t(beta, tau_t_2),
+         C_2 = C_t(K_2, g, t),
+         U_2 = U_C(C_2, eta),
+         PV_2 = PV(U_2, ramsey(delta, eta, g), t))
+
+PV_BAU_2 <- sum(BAU_2$PV_2)
+# PV_BAU_2
+
+# Present value utility with 4 degree increase in temp from climate change
+BAU_4 <- df %>% 
+  mutate(tau_t_4 = rel_temp_t(4, t),
+         K_4 = K_t(beta, tau_t_4),
+         C_4 = C_t(K_4, g, t),
+         U_4 = U_C(C_4, eta),
+         PV_4 = PV(U_4, ramsey(delta, eta, g), t))
+
+PV_BAU_4 <- sum(BAU_4$PV_4)
+# PV_BAU_4
+
+# Present value utility with 6 degree increase in temp from climate change
+BAU_6 <- df %>% 
+  mutate(tau_t_6 = rel_temp_t(6, t),
+         K_6 = K_t(beta, tau_t_6),
+         C_6 = C_t(K_6, g, t),
+         U_6 = U_C(C_6, eta),
+         PV_6 = PV(U_6, ramsey(delta, eta, g), t))
+
+PV_BAU_6 <- sum(BAU_6$PV_6)
+# PV_BAU_6
+
+PV_uncertainty <- 0.2*PV_BAU_2 + 0.5*PV_BAU_4 + 0.3*PV_BAU_6
+
 ```
