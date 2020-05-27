@@ -350,22 +350,21 @@ df_2b <- df_2b %>%
 ```
 
 
-```{r}
+```{r, echo = FALSE}
 df_2b_display <- df_2b %>%
   filter(increase != "none") %>%
   select(increase, L_pct) #%>%
   # rename("Adjusted Value" = increase,
   #        "Percent Change in L" = L_pct)
 
-# kable(df_2b_display,
-#       col.names = c("Adjusted Value",
-#                     "Percent Change in L") %>%
-#         kable_styling(bootstrap_options = "striped",
-#                       full_width = F,
-#                       position = "center") %>%
-#         add_header_above(c("Sensitivity Test: Present Value Utility Lost (L)" = 2)))
+kable(df_2b_display,
+      col.names = c("Adjusted Value",
+                    "Percent Change in L")) %>%
+  kable_styling(bootstrap_options = "striped",
+                full_width = F,
+                position = "center") %>%
+  add_header_above(c("Sensitivity Test: Present Value Utility Lost (L)" = 2))
 
-# kable(df_2b_display)
 ```
 
 
